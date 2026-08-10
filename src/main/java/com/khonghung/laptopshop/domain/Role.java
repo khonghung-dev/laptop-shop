@@ -11,11 +11,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "role")
-    private List<User> users;
-
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "role")
+    private List<User> users;
 
     public long getId() {
         return id;

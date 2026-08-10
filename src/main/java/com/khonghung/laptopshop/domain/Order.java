@@ -2,6 +2,8 @@ package com.khonghung.laptopshop.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -9,11 +11,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private double totalPrice;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    private double totalPrice;
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetail;
 
     public long getId() {
         return id;
