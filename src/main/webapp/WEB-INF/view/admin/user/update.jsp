@@ -9,19 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Create a new User</title>
+    <title>Update User ID ${id}</title>
     <link href="/css/styles.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(() => {
-            const avatarFile = $("#avatarFile");
-            avatarFile.change(function (e) {
-                const imgURL = URL.createObjectURL(e.target.files[0]);
-                $("#avatarPreview").attr("src", imgURL);
-                $("#avatarPreview").css({ "display": "block" });
-            });
-        });
-    </script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -35,24 +24,18 @@
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="/admin/user">Manage Users</a></li>
-                    <li class="breadcrumb-item active">Create User</li>
+                    <li class="breadcrumb-item active">Update User</li>
                 </ol>
                 <div class="mt-5">
                     <div class="row">
                         <div class="col-md-6 col-12 mx-auto">
-                            <h1>Create a User</h1>
+                            <h1>Update User with ID = ${id}</h1>
                             <hr/>
-                            <form:form method="post" action="/admin/user/create" modelAttribute="newUser" class="row">
+                            <form:form method="post" action="/admin/user/${id}/edit" modelAttribute="updateUser" class="row">
                                 <div class="mb-3 col-12 col-md-6">
                                     <label class="form-label">Full Name:</label>
                                     <form:input type="text" class="form-control"
                                                 path="fullName"
-                                    />
-                                </div>
-                                <div class="mb-3 col-12 col-md-6">
-                                    <label class="form-label">Email:</label>
-                                    <form:input type="email" class="form-control"
-                                                path="email"
                                     />
                                 </div>
                                 <div class="mb-3 col-12 col-md-6">
@@ -61,10 +44,10 @@
                                                 path="phone"
                                     />
                                 </div>
-                                <div class="mb-3 col-12 col-md-6">
-                                    <label class="form-label">Password:</label>
-                                    <form:input type="password" class="form-control"
-                                                path="password"
+                                <div class="mb-3">
+                                    <label class="form-label">Email:</label>
+                                    <form:input type="email" class="form-control"
+                                                path="email" disabled = "true"
                                     />
                                 </div>
                                 <div class="mb-3">
@@ -73,24 +56,9 @@
                                                 path="address"
                                     />
                                 </div>
-                                <div class="mb-3 col-12 col-md-6">
-                                    <label class="form-label">Role:</label>
-                                    <form:select class="form-select">
-                                        <form:option value="ADMIN">ADMIN</form:option>
-                                        <form:option value="USER">USER</form:option>
-                                    </form:select>
-                                </div>
-                                <div class="mb-3 col-12 col-md-6">
-                                    <label for="avatarFile" class="form-label">Avatar:</label>
-                                    <input class="form-control" type="file" id="avatarFile"
-                                    accept=".png,.jpg,.jpeg">
-                                </div>
-                                <div class="col-12 mb-3 d-flex justify-content-center">
-                                    <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview">
-                                </div>
                                 <div class="col-12 mb-5">
                                 <a href="/admin/user" class="btn btn-secondary my-3 me-2">Cancel</a>
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
                                 </div>
                             </form:form>
                         </div>
