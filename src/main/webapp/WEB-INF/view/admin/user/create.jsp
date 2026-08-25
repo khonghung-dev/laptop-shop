@@ -42,7 +42,7 @@
                         <div class="col-md-6 col-12 mx-auto">
                             <h1>Create a User</h1>
                             <hr/>
-                            <form:form method="post" action="/admin/user/create" modelAttribute="newUser" class="row">
+                            <form:form method="post" action="/admin/user/create" modelAttribute="newUser" class="row" enctype="multipart/form-data">
                                 <div class="mb-3 col-12 col-md-6">
                                     <label class="form-label">Full Name:</label>
                                     <form:input type="text" class="form-control"
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="mb-3 col-12 col-md-6">
                                     <label class="form-label">Role:</label>
-                                    <form:select class="form-select">
+                                    <form:select class="form-select" path="role.name">
                                         <form:option value="ADMIN">ADMIN</form:option>
                                         <form:option value="USER">USER</form:option>
                                     </form:select>
@@ -83,7 +83,9 @@
                                 <div class="mb-3 col-12 col-md-6">
                                     <label for="avatarFile" class="form-label">Avatar:</label>
                                     <input class="form-control" type="file" id="avatarFile"
-                                    accept=".png,.jpg,.jpeg">
+                                    accept=".png,.jpg,.jpeg"
+                                    name="hungkhongFile"
+                                    />
                                 </div>
                                 <div class="col-12 mb-3 d-flex justify-content-center">
                                     <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview">

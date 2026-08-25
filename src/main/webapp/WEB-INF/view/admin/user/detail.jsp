@@ -38,6 +38,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">ID: ${id}</li>
                                     <li class="list-group-item">Full Name: ${users.fullName}</li>
+                                    <li class="list-group-item">Role: ${users.role.name}</li>
                                     <li class="list-group-item">Phone Number: ${users.phone}</li>
                                     <li class="list-group-item">Email: ${users.email}</li>
                                     <li class="list-group-item">Address: ${users.address}</li>
