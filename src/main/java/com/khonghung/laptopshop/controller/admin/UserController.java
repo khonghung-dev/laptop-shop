@@ -3,11 +3,12 @@ package com.khonghung.laptopshop.controller.admin;
 import com.khonghung.laptopshop.domain.User;
 import com.khonghung.laptopshop.service.UploadServices;
 import com.khonghung.laptopshop.service.UserService;
-import jakarta.servlet.ServletContext;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,14 +26,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //Home page
-    @GetMapping("/")
-    public String getHomePage(Model model) {
-        return "redirect:/admin";
-    }
-
-
-    //Table user
     @GetMapping("/admin/user")
     public String getUserTablePage(Model model) {
         List<User> users = this.userService.getAllUsers();
@@ -40,7 +33,6 @@ public class UserController {
         return "admin/user/show";
     }
 
-    //User Detail
     @GetMapping("/admin/user/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id) {
         User users = this.userService.getAllUsersById(id).orElse(null);
@@ -49,7 +41,6 @@ public class UserController {
         return "admin/user/detail";
     }
 
-    //Create new user
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
@@ -58,8 +49,19 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/create")
     public String createUserPage(Model model,
-                                 @ModelAttribute("newUser") User hungdeptrai,
+                                 @ModelAttribute("newUser") @Valid User hungdeptrai,
+                                 BindingResult newUserBindingResult,
                                  @RequestParam("hungkhongFile") MultipartFile file) {
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors ) {
+            System.out.println (error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if(newUserBindingResult.hasErrors()){
+            return "admin/user/create";
+        }
+
         String avatar = this.uploadServices.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hungdeptrai.getPassword());
         hungdeptrai.setAvatar(avatar);
@@ -69,7 +71,6 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    //Update user
     @GetMapping("/admin/user/{id}/edit")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User users = this.userService.getAllUsersById(id).orElse(null);
@@ -80,9 +81,15 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/{id}/edit")
     public String updateUserPage(Model model,
-                                 @ModelAttribute("updateUser") User updateUser,
+                                 @ModelAttribute("updateUser") @Valid User updateUser,
+                                 BindingResult updateUserBindingResult,
+                                 @PathVariable long id,
                                  @RequestParam("hungkhongFile") MultipartFile file) {
-        User currentUser = this.userService.getAllUsersById(updateUser.getId()).orElse(null);
+        if (updateUserBindingResult.hasFieldErrors("fullName") || updateUserBindingResult.hasFieldErrors("phone")) {
+            model.addAttribute("id", id);
+            return "admin/user/update";
+        }
+        User currentUser = this.userService.getAllUsersById(id).orElse(null);
         if (currentUser != null) {
             currentUser.setFullName(updateUser.getFullName());
             currentUser.setPhone(updateUser.getPhone());
@@ -98,7 +105,6 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    //Delete User
     @GetMapping("/admin/user/{id}/delete")
     public String deleteUserPage(Model model, @PathVariable long id) {
         User users = this.userService.getAllUsersById(id).orElse(null);

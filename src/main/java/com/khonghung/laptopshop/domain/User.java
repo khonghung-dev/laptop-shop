@@ -1,6 +1,7 @@
 package com.khonghung.laptopshop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -11,11 +12,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Email address must not be empty")
+    @Pattern(
+            regexp = "^\\s*$|^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$",
+            message = "Invalid email address"
+    )
     private String email;
+
+    @NotBlank(message = "Password must not be empty")
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
+
+    @NotBlank(message = "Full name must not be empty")
+    @Size(min = 2, message = "Full name must be at least 2 characters long")
     private String fullName;
+
     private String address;
+
+    @NotBlank(message = "Phone number must not be empty")
+    @Size(min = 10, message = "Phone number must be at least 10 characters long")
     private String phone;
+
     private String avatar;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package com.khonghung.laptopshop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "products")
@@ -9,22 +10,90 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Name Laptop must not be empty")
+    @Size(min = 2, message = "Name Laptop must be at least 2 characters long")
     private String name;
-    private double price;
+
+    @NotNull(message = "Price must not be empty")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
+    private Double price;
+
     private String image;
+
+    @NotBlank(message = "Detail description must not be empty")
+    @Size(min = 10, message = "Detail description must be at least 10 characters long")
     private String detailDesc;
+
+    @NotBlank(message = "Short description must not be empty")
+    @Size(min = 5, message = "Short description must be at least 5 characters long")
     private String shortDesc;
-    private long quantity;
+
+    @NotNull(message = "Quantity must not be empty")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    private Long quantity;
+
+    @NotNull(message = "Sold must not be empty")
+    @Min(value = 0, message = "Sold must be at least 0")
     private long sold;
+
     private String factory;
+
     private String target;
 
-    public String getTarget() {
-        return target;
+    public long getId() {
+        return id;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getDetailDesc() {
+        return detailDesc;
+    }
+
+    public void setDetailDesc(String detailDesc) {
+        this.detailDesc = detailDesc;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
     public long getSold() {
@@ -43,60 +112,12 @@ public class Product {
         this.factory = factory;
     }
 
-    public long getQuantity() {
-        return quantity;
+    public String getTarget() {
+        return target;
     }
 
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getShortDesc() {
-        return shortDesc;
-    }
-
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getDetailDesc() {
-        return detailDesc;
-    }
-
-    public void setDetailDesc(String detailDesc) {
-        this.detailDesc = detailDesc;
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     @Override

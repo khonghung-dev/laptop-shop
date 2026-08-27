@@ -31,18 +31,35 @@
                         <div class="col-12 mx-auto">
                             <h3>User Detail</h3>
                             <hr/>
-                            <div class="card" style="width: 60%;">
-                                <div class="card-header">
-                                    User Information
+                            <div class="row">
+                                <div class="col-12 col-md-7">
+                                    <div class="card h-100">
+                                        <div class="card-header">
+                                            User Information
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">ID: ${id}</li>
+                                            <li class="list-group-item">Full Name: ${users.fullName}</li>
+                                            <li class="list-group-item">Role: ${users.role.name}</li>
+                                            <li class="list-group-item">Phone Number: ${users.phone}</li>
+                                            <li class="list-group-item">Email: ${users.email}</li>
+                                            <li class="list-group-item">Address: ${users.address}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">ID: ${id}</li>
-                                    <li class="list-group-item">Full Name: ${users.fullName}</li>
-                                    <li class="list-group-item">Role: ${users.role.name}</li>
-                                    <li class="list-group-item">Phone Number: ${users.phone}</li>
-                                    <li class="list-group-item">Email: ${users.email}</li>
-                                    <li class="list-group-item">Address: ${users.address}</li>
-                                </ul>
+                                <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mt-3 mt-md-0">
+                                    <div class="card p-2 text-center w-100 h-100 d-flex justify-content-center align-items-center">
+                                        <c:if test="${not empty users.avatar}">
+                                            <img src="/images/avatar/${users.avatar}" 
+                                                 alt="${users.fullName}" 
+                                                 class="img-fluid rounded" 
+                                                 style="max-height: 300px; object-fit: contain;" />
+                                        </c:if>
+                                        <c:if test="${empty users.avatar}">
+                                            <span class="text-muted">Không có ảnh đại diện</span>
+                                        </c:if>
+                                    </div>
+                                </div>
                             </div>
                             <a href="/admin/user" class="btn btn-secondary my-3">Back</a>
                         </div>
